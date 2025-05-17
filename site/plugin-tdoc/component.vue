@@ -1,14 +1,14 @@
 <template>
   <td-doc-content ref="tdDocContent" platform="mobile" page-status="hidden">
-    <td-doc-header v-if="info.tdDocHeader" platform="mobile" slot="doc-header" ref="tdDocHeader"></td-doc-header>
+    <td-doc-header v-if="info.tdDocHeader" platform="mobile" slot="doc-header" ref="tdDocHeader"/>
     <template v-if="info.isComponent">
-      <td-doc-tabs ref="tdDocTabs" :tab="tab"></td-doc-tabs>
+      <!-- TODO 💼 修改自定义Tab <refer-job-doc-tabs ref="tdDocTabs" :tab="tab"/> -->
+      <td-doc-tabs ref="tdDocTabs" :tab="tab"/>
       <div class="td-doc-main" v-show="tab === 'demo'">
         <div name="DEMO" v-html="info.demoMd"></div>
         <td-doc-phone>
           <div class="qrcode__wrapper" slot="qrcode">
             <img class="qrcode" :src="qrcode" />
-            <!-- <img class="qrcode" :src="`https://tdesign.gtimg.com/miniprogram/qrcode/${name}.png`" /> -->
           </div>
           <iframe
             :src="liveUrl"
@@ -24,12 +24,12 @@
         <td-contributors platform="miniprogram" framework="wx" :component-name="name"></td-contributors>
       </div>
       <div v-show="tab === 'api'" name="API" v-html="info.apiMd"></div>
-      <div v-show="tab === 'design'" name="DESIGN" v-html="info.designMd"></div>
+      <!-- <div v-show="tab === 'design'" name="DESIGN" v-html="info.designMd"></div> -->
     </template>
     <div name="DOC" :class="info.docClass" v-else v-html="info.docMd"></div>
-    <div style="margin-top: 48px">
+ <!--    <div style="margin-top: 48px">
       <td-doc-history :time="info.lastUpdated"></td-doc-history>
-    </div>
+    </div> -->
     <td-doc-footer slot="doc-footer" platform="mobile"></td-doc-footer>
   </td-doc-content>
 </template>
@@ -38,6 +38,7 @@
 import { defineComponent } from 'vue';
 
 import Prismjs from 'prismjs';
+import '../components/refer-job-doc-tabs/index.js'
 import 'prismjs/components/prism-bash.js';
 import 'prismjs/components/prism-json.js';
 
@@ -66,7 +67,10 @@ export default defineComponent({
       return path.slice(path.lastIndexOf('/') + 1);
     },
     liveUrl() {
-      return `//tdesign.tencent.com/miniprogram-live/m2w/program/miniprogram/#!pages/${this.name}/${this.name}.html`;
+      // https://tdesign.tencent.com/miniprogram-live/m2w/program/miniprogram/#!pages/button/button.html
+      let url = `//tdesign.tencent.com/miniprogram-live/m2w/program/miniprogram/#!pages/${this.name}/${this.name}.html`;
+      console.log('---url---',url);
+      return url
     },
     qrcode() {
       const { path } = this.$route;
@@ -79,6 +83,7 @@ export default defineComponent({
   mounted() {
     const { info } = this;
     const { tdDocContent, tdDocHeader, tdDocTabs } = this.$refs;
+    console.log('---tdDocTabs02---',tdDocTabs);
 
     if (info.isComponent) {
       tdDocTabs.onchange = ({ detail: currentTab }) => (this.tab = currentTab);

@@ -84,7 +84,7 @@ export const docs = [
     type: 'component', // 组件文档
     children: [
       {
-        title: 'Button 按钮',
+        title: '组件模板',
         titleEn: 'Button',
         name: 'button',
         meta: { docType: 'base' },

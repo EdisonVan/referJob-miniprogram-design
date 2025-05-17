@@ -1,19 +1,19 @@
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
+import path from 'path';
 
 const componentPath = path.join(__dirname, './component.vue').replaceAll('\\', '/');
 
 const DEFAULT_TABS = [
   { tab: 'demo', name: '示例' },
   { tab: 'api', name: 'API' },
-  { tab: 'design', name: '指南' },
+  // { tab: 'design', name: '指南' },
 ];
 
 const DEFAULT_EN_TABS = [
   { tab: 'demo', name: 'DEMO' },
   { tab: 'api', name: 'API' },
-  { tab: 'design', name: 'Guideline' },
+  // { tab: 'design', name: 'Guideline' },
 ];
 
 // 解析 markdown 内容
@@ -29,7 +29,7 @@ function customRender({ source, file, md }: any) {
     description: '',
     isComponent: false,
     tdDocHeader: true,
-    tdDocTabs: !isEn ? DEFAULT_TABS : DEFAULT_EN_TABS,
+    tdDocTabs: isEn ? DEFAULT_TABS : DEFAULT_EN_TABS,
     apiFlag: /#+\s*API\n/i,
     docClass: '',
     lastUpdated: Math.round(fs.statSync(file).mtimeMs),
@@ -49,7 +49,7 @@ function customRender({ source, file, md }: any) {
     docMd: '<td-doc-empty></td-doc-empty>',
     demoMd: '<td-doc-empty></td-doc-empty>',
     apiMd: '<td-doc-empty></td-doc-empty>',
-    designMd: '<td-doc-empty></td-doc-empty>',
+    // designMd: '<td-doc-empty></td-doc-empty>',
   };
 
   if (pageData.isComponent) {
@@ -66,14 +66,13 @@ function customRender({ source, file, md }: any) {
   }
 
   // 设计指南内容 不展示 design Tab 则不解析
-  if (pageData.isComponent && pageData.tdDocTabs.some((item) => item.tab === 'design')) {
+  /* if (pageData.isComponent && pageData.tdDocTabs.some((item) => item.tab === 'design')) {
     const designDocPath = path.resolve(__dirname, `../../src/_common/docs/mobile/design/${componentName}.md`);
-
     if (fs.existsSync(designDocPath)) {
       const designMd = fs.readFileSync(designDocPath, 'utf-8');
       mdSegment.designMd = md.render.call(md, `${pageData.toc ? '[toc]\n' : ''}${designMd}`).html;
     }
-  }
+  } */
 
   return mdSegment;
 }

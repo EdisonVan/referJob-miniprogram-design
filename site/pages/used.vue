@@ -72,6 +72,7 @@ export default {
 
   mounted() {
     const { tdDocContent, tdDocHeader, tdDocTabs } = this.$refs;
+    console.log('---tdDocTabs01---',tdDocTabs);
 
     this.$emit('loaded', () => {
       tdDocHeader.docInfo = {
