@@ -1,5 +1,5 @@
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import mdToVue from './md-to-vue';
 
 let demoCodesImports: Record<string, string> = {};
@@ -29,21 +29,22 @@ export default {
         return '\n<h3>DEMO (🚧建设中）...</h3>';
       }
       const wxml = fs.readFileSync(path.resolve(demoPath, 'index.wxml'), { encoding: 'utf-8' });
-      const js = fs.readFileSync(path.resolve(demoPath, 'index.js'), { encoding: 'utf-8' });
-      const css = fs.readFileSync(path.resolve(demoPath, 'index.wxss'), { encoding: 'utf-8' });
-      const json = fs.readFileSync(path.resolve(demoPath, 'index.json'), { encoding: 'utf-8' });
+      // const js = fs.readFileSync(path.resolve(demoPath, 'index.js'), { encoding: 'utf-8' });
+      // const css = fs.readFileSync(path.resolve(demoPath, 'index.wxss'), { encoding: 'utf-8' });
+      // const json = fs.readFileSync(path.resolve(demoPath, 'index.json'), { encoding: 'utf-8' });
 
       return `
-<td-code-block panel="WXML">
-  <pre slot="WXML" lang="html">${encodeURIComponent(wxml)}</pre>
+<td-code-block panel="VUE">
+  <pre slot="VUE" lang="html">${encodeURIComponent(wxml)}</pre>
+</td-code-block>`;
+    });
 
+    /* 
   <pre slot="JS" lang="javascript">${encodeURIComponent(js)}</pre>
 
   <pre slot="CSS" lang="css">${encodeURIComponent(css)}</pre>
 
-  <pre slot="JSON" lang="javascript">${encodeURIComponent(json)}</pre>
-</td-code-block>`;
-    });
+  <pre slot="JSON" lang="javascript">${encodeURIComponent(json)}</pre> */
 
     return source;
   },

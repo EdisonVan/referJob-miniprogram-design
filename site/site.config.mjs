@@ -93,7 +93,7 @@ export const docs = [
         componentEn: () => import('@/button/README.en-US.md'),
       },
       {
-        title: 'Divider 分割线',
+        title: 'Avatar 头像',
         titleEn: 'Divider',
         name: 'divider',
         meta: { docType: 'data' },

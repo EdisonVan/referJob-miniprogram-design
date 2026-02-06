@@ -80,7 +80,6 @@ function customRender({ source, file, md }: any) {
 export default function mdToVue(options: any) {
   const mdSegment = customRender(options);
   const { demoCodesImportsStr = '', demoCodesDefsStr } = options;
-
   const sfc = `
     <template><tdesign-doc /></template>
     <script>

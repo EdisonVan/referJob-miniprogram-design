@@ -1,6 +1,5 @@
-
-import { define, dispatch, html } from "hybrids";
-import style from "./style.less";
+import { define, dispatch, html } from 'hybrids';
+import style from './style.less';
 
 export function getLang() {
   const isEn = /-en$/.test(location.pathname);
@@ -14,7 +13,7 @@ function handleTabClick(host, e) {
 
   const { tab: currentTab } = e.target.dataset;
   Object.assign(host, { tab: currentTab });
-  dispatch(host, "change", { detail: currentTab });
+  dispatch(host, 'change', { detail: currentTab });
 
   // 自动滚动
   if (host.autoScroll) {
@@ -22,27 +21,28 @@ function handleTabClick(host, e) {
       window.scrollTo({
         left: 0,
         top: host.tabScrollMap[currentTab],
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     });
   }
 }
 
 const defaultTabs = [
-  { tab: "demo", name: lang === 'zh' ? "示例" : "Demo" },
-  { tab: "api", name: "API" },
+  { tab: 'demo', name: lang === 'zh' ? '示例' : 'Demo' },
+  { tab: 'api', name: 'API' },
   // { tab: "design", name: lang === 'zh' ? "指南" : "Guide" },
 ];
 
 export default define({
-  tag: "refer-job-doc-tabs",
-  tab: "demo",
+  tag: 'refer-job-doc-tabs',
+  tab: 'demo',
   // 记录每个 tab 滚动条并自动滚动
   autoScroll: true,
   // 记录每个 tab 的滚动距离
   tabScrollMap: {
     get: (host, lastValue) => {
       const tabMap = {};
+      console.log('---host.tabs---', host.tabs);
       host.tabs.forEach(({ tab }) => {
         tabMap[tab] = 0;
       });
@@ -64,7 +64,7 @@ export default define({
           return;
         }
 
-        const items = host.shadowRoot.querySelectorAll(".item");
+        const items = host.shadowRoot.querySelectorAll('.item');
         let styleMap = {};
         items.forEach((item) => {
           if (!item.offsetWidth) {
@@ -82,10 +82,10 @@ export default define({
 
       requestAnimationFrame(handleResize);
 
-      window.addEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
 
       return () => {
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener('resize', handleResize);
       };
     },
   },
@@ -100,14 +100,10 @@ export default define({
         <span class="TDesign-doc-tabs__block" style="${blockStyle}"></span>
         ${tabs.map(
           (item) => html`
-            <div
-              data-tab=${item.tab}
-              onclick="${handleTabClick}"
-              class="item ${item.tab === tab ? "active" : ""}"
-            >
+            <div data-tab=${item.tab} onclick="${handleTabClick}" class="item ${item.tab === tab ? 'active' : ''}">
               ${item.name}
             </div>
-          `
+          `,
         )}
       </div>
     `.css`${style}`;
